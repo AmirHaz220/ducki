@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrumpsShooter</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rough-notation/0.5.1/rough-notation.iife.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff4d4d;
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #4dff4d;
+        }
+        body, html {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(26, 26, 26, 0.9);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        h1, h2 {
+            color: var(--primary-color);
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: url("shooter.png");
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .section {
+            padding: 100px 0;
+        }
+        .sketch {
+            border: 2px solid var(--primary-color);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        .sketch:hover {
+            transform: scale(1.05);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        .social-links {
+            margin-top: 30px;
+        }
+        .social-links a {
+            color: var(--primary-color);
+            margin-right: 20px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        .coin-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .stat {
+            text-align: center;
+            margin: 20px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .contract-address {
+            word-break: break-all;
+            font-family: monospace;
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .copy-btn:hover {
+            background-color: var(--accent-color);
+        }
+        footer {
+            background-color: #2a2a2a;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        #iconSelector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#tokenomics">Tokenomics</a></li>
+                <li><a href="#buy">Buy</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <select id="iconSelector">
+        <option value="🎯">🎯 Target</option>
+        <option value="🔫">🔫 Gun</option>
+        <option value="💰">💰 Money Bag</option>
+        <option value="🚀">🚀 Rocket</option>
+    </select>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Shooter Coin <span id="coinIcon">🎯</span></h1>
+            <p>Fuck trumps shooter</p>
+            <a href="#buy" class="btn">Buy Now</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="about" class="section">
+            <div class="sketch" id="about-sketch">
+                <h2>About Shooter Coin</h2>
+                <p>In order to shit on trumps shooter, we are going to be making bank from his death. So buy the coin if you want it be in something bigger.</p>
+            </div>
+            <div class="coin-stats">
+                <div class="stat">
+                    <div class="stat-value" id="price">Loading...</div>
+                    <div>Price</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="market-cap">Loading...</div>
+                    <div>Market Cap</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="holders">Loading...</div>
+                    <div>Holders</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tokenomics" class="section">
+            <div class="sketch" id="tokenomics-sketch">
+                <h2>Tokenomics</h2>
+                <h3>Smart Contract</h3>
+                <div class="contract-address">
+                    <span id="contractAddress">0x1234567890123456789012345678901234567890</span>
+                    <button class="copy-btn" onclick="copyContract()">Copy</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="buy" class="section">
+            <div class="sketch" id="buy-sketch">
+                <h2>Buy Shooter Coin</h2>
+                <a href="#" class="btn">Purchase</a>
+            </div>
+        </section>
+
+        <div class="social-links">
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">Telegram</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Shooter Coin. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Icon selector
+        const iconSelector = document.getElementById('iconSelector');
+        const coinIcon = document.getElementById('coinIcon');
+        iconSelector.addEventListener('change', (e) => {
+            coinIcon.textContent = e.target.value;
+            document.querySelector('link[rel="icon"]')?.remove();
+            const link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>${e.target.value}</text></svg>`;
+            document.head.appendChild(link);
+        });
+
+        // Add rough notation effect to sketches
+        const sketches = document.querySelectorAll('.sketch');
+        sketches.forEach(sketch => {
+            const annotation = RoughNotation.annotate(sketch, { type: 'underline', color: '#ff4d4d', strokeWidth: 3, padding: 5 });
+            annotation.show();
+        });
+
+        // Function to format large numbers
+        function formatNumber(num) {
+            if (num >= 1000000000) {
+                return (num / 1000000000).toFixed(1) + 'B';
+            }
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            }
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Function to update stats with placeholder data
+        function updateStats() {
+            const price = 0.0001;
+            const marketCap = 1000000;
+            const holders = 10000;
+
+            document.getElementById('price').textContent = '$' + price.toFixed(4);
+            document.getElementById('market-cap').textContent = '$' + formatNumber(marketCap);
+            document.getElementById('holders').textContent = formatNumber(holders);
+        }
+
+        // Update stats immediately
+        updateStats();
+
+        // GSAP animations
+        gsap.from('.hero h1', { duration: 1, y: 50, opacity: 0, ease: 'power3.out' });
+        gsap.from('.hero p', { duration: 1, y: 50, opacity: 0, ease: 'power3.out', delay: 0.3 });
+        gsap.from('.hero .btn', { duration: 1, y: 50, opacity: 0, ease: 'power3.out', delay: 0.6 });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Function to copy contract address
+        function copyContract() {
+            const contractAddress = document.getElementById('contractAddress').textContent;
+            navigator.clipboard.writeText(contractAddress).then(() => {
+                alert('Contract address copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
